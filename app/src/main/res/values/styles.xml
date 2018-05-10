@@ -8,8 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
 
-        <item name="android:windowEnterTransition" tools:targetApi="lollipop">@android:transition/explode</item>
-        <item name="android:windowExitTransition" tools:targetApi="lollipop">@android:transition/explode</item>
+        <item name="android:windowEnterTransition" tools:targetApi="lollipop">@transition/explode</item>
+        <item name="android:windowExitTransition" tools:targetApi="lollipop">@transition/explode</item>
 
         <!-- specify shared element transitions -->
         <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">@transition/changebounds</item>
