@@ -1,15 +1,22 @@
 package adam.gardner.com.cheeseem
 
 import android.annotation.SuppressLint
+import android.content.ContentProvider
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.transition.Explode
 import android.view.Menu
 import android.view.MenuItem
+import android.view.Window
 import android.widget.AdapterView
 import android.widget.GridView
+import android.app.ActivityOptions
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +58,19 @@ class MainActivity : AppCompatActivity() {
 
         gridView.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, v, position, id ->
-                    startActivity(Intent(this@MainActivity, HeroDetailActivity::class.java))
+                    // Check if we're running on Android 5.0 or higher
+
+                    val i = Intent(this@MainActivity, HeroDetailActivity::class.java)
+
+                    val sharedView = gridView
+                    val transitionName = getString(R.string.image_annimation)
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity, sharedView, transitionName)
+                        startActivity(i, transitionActivityOptions.toBundle())
+                    } else {
+                        startActivity(Intent(this@MainActivity, HeroDetailActivity::class.java))
+                    }
                 }
     }
 }

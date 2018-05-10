@@ -1,6 +1,7 @@
 package adam.gardner.com.cheeseem
 
 import android.content.Context
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -35,6 +36,9 @@ class ImageAdapter(private val mContext: Context) : BaseAdapter() {
             imageView = ImageView(mContext)
             imageView.scaleType = ImageView.ScaleType.FIT_CENTER
             imageView.setPadding(10, 10,10, 10)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                imageView.transitionName = "image animation"
+            }
         } else {
             imageView = convertView as ImageView
         }
