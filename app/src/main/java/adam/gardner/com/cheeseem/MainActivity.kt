@@ -15,8 +15,7 @@ import android.view.Window
 import android.widget.AdapterView
 import android.widget.GridView
 import android.app.ActivityOptions
-
-
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,8 +28,13 @@ class MainActivity : AppCompatActivity() {
         val fab = findViewById<FloatingActionButton>(R.id.fab)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            val manager = FingerprintManagerCompat.from(this)
+
+            if (manager.isHardwareDetected && manager.hasEnrolledFingerprints()) {
+                showFingerprintAuth()
+            } else {
+                Snackbar.make(view, "Fingerprint authentication is not supported.", Snackbar.LENGTH_SHORT).show()
+            }
         }
 
         initGridView()
@@ -72,5 +76,13 @@ class MainActivity : AppCompatActivity() {
                         startActivity(Intent(this@MainActivity, HeroDetailActivity::class.java))
                     }
                 }
+    }
+
+    private fun showFingerprintAuth() {
+        val dialog = FingerprintDialog.newInstance(
+                "Sign In",
+                "Confirm fingerprint to continue."
+        )
+        dialog.show(supportFragmentManager, FingerprintDialog.FRAGMENT_TAG)
     }
 }
