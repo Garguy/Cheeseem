@@ -3,7 +3,7 @@ package adam.gardner.com.cheeseem
 
 import adam.gardner.com.cheeseem.controllers.FingerprintController
 import android.annotation.SuppressLint
-import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.security.keystore.KeyGenParameterSpec
@@ -112,6 +112,10 @@ class FingerprintDialog : DialogFragment(), FingerprintController.Callback {
         cryptoObject?.let {
             controller.startListening(it)
         }
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     override fun onPause() {
@@ -121,6 +125,7 @@ class FingerprintDialog : DialogFragment(), FingerprintController.Callback {
 
     override fun onAuthenticated() {
         //TODO:
+        dialog.dismiss()
     }
 
     override fun onError() {
